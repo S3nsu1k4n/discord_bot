@@ -32,17 +32,21 @@ async def get_meme(ctx):
     if ctx.author == bot.user.name:
         return
 
+    msg = ''
     data = get_reddit_meme()
-    embed = Embed(title=data['title'],
-                  description=data['url'],
-                  color=0x00ff00
-                  )
-    embed.set_image(url=data['url'])
-    embed.set_footer(text='/' + data["subreddit"])
+    if data['url'].find('youtube.com') != -1 or data['url'].find('?source=fallback') != -1:
+        embed = Embed(title=data['title'], color=0x9400D3)
+        msg = data['url']
+    else:
+        embed = Embed(title=data['title'], description=data['url'], color=0x00ff00)
+        embed.set_image(url=data['url'])
 
+    embed.set_footer(text=data['timestamp'] + '\nr/' + data["subreddit"])
     channel = bot.get_channel(CHANNEL_MEMES)
 
     await channel.send(embed=embed)
+    if msg:
+        await channel.send(msg)
 
 
 @bot.command(name='cat', help='Random cat!')
