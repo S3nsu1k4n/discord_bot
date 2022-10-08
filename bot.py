@@ -60,6 +60,7 @@ async def get_meme(ctx):
         await channel.send(msg)
 
 
+
 @bot.command(name='cat', help='Random cat!')
 async def get_cat(ctx):
     if ctx.author == bot.user.name:
@@ -75,6 +76,11 @@ async def get_cat(ctx):
     channel = bot.get_channel(CHANNEL_KATZEN)
 
     await channel.send(embed=embed)
+
+
+@bot.command(name='meowdy', help='Random cat!')
+async def meowdy(ctx):
+    await get_cat(ctx)
 
 
 @bot.command(name='game', help='Play Pokemon Text!')
